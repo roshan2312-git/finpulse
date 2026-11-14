@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1530">
+<title>FinPulse V4 — Personal Finance OS</title>
+<style>
+:root{--bg:#f3f6fc;--surface:#fff;--surface2:#f7f9fd;--ink:#14213d;--muted:#71809b;--line:#e2e8f2;--blue:#2458df;--blue2:#3979ff;--navy:#142b59;--green:#07865e;--shadow:0 12px 35px rgba(20,42,83,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9ab8ff;outline-offset:2px}
+.app{width:100%;min-width:0;max-width:1180px;margin:auto;padding:0 22px 60px}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:21px;letter-spacing:-.6px}.brandmark{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#2864ef,#15388f);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:0 7px 16px #2458df40}.top-actions{display:flex;gap:9px;align-items:center}.iconbtn{width:42px;height:42px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:20px}.hero{border-radius:26px;padding:28px 30px;background:linear-gradient(120deg,#122751,#234b9a);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:24px;box-shadow:0 16px 35px #173d8725}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:850;color:#91a5c8;text-transform:uppercase}.hero h1{font-size:clamp(25px,4vw,38px);line-height:1.12;margin:8px 0}.hero p{margin:0;color:#c8d5ed;max-width:570px}.hero-chip{border:1px solid #ffffff35;background:#ffffff12;border-radius:16px;padding:14px 17px;min-width:155px}.hero-chip strong{display:block;font-size:23px}.layout{min-width:0;display:grid;grid-template-columns: minmax(0,1.45fr) minmax(290px,.75fr);gap:20px;margin-top:22px}.stack{min-width:0;display:grid;gap:18px;align-content:start}.card{min-width:0;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:21px;padding:22px;box-shadow:var(--shadow)}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.card h2{font-size:19px;margin:0;letter-spacing:-.35px}.muted{color:var(--muted)}.tiny{font-size:11px}.loan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.loan-option{border:1.5px solid var(--line);background:#fff;border-radius:15px;padding:15px 14px;text-align:left;font-weight:750;color:#263653;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:.16s}.loan-option .name{display:flex;align-items:center;gap:9px}.loan-option .check{display:none;width:23px;height:23px;border-radius:50%;background:white;color:var(--blue);font-weight:900;align-items:center;justify-content:center}.loan-option.selected{background:linear-gradient(120deg,#2458df,#3978f6);border-color:#1948c6;color:#fff;box-shadow:0 8px 18px #2458df2b}.loan-option.selected .check{display:flex}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.field{min-width:0}.field label{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:11px;letter-spacing:1px;font-weight:850;color:#7887a1;margin-bottom:9px;text-transform:uppercase}.control{width:100%;height:55px;border:1.5px solid var(--line);border-radius:13px;background:#fbfcff;padding:0 15px;color:var(--ink);font-size:19px;font-weight:650;outline:none}.control:focus{border-color:#7ea1fa;box-shadow:0 0 0 3px #dbe6ff}.range{display:block;width:100%;margin:13px 0 0;height:24px;accent-color:var(--blue);cursor:grab;touch-action:pan-y}.range:active{cursor:grabbing}.field-footer{display:flex;justify-content:space-between;color:#8b98ad;font-size:10px;margin-top:3px}.unit-switch{display:flex;gap:5px;background:#f0f3fa;padding:5px;border:1px solid #e0e6f1;border-radius:14px}.unit-btn{flex:1;min-height:42px;border:1px solid transparent;border-radius:10px;background:transparent;color:#71809b;font-size:12px;font-weight:900;letter-spacing:.6px}.unit-btn[aria-pressed="true"]{background:var(--blue);border-color:#1648c8;color:#fff;box-shadow:0 4px 12px #2458df40}.unit-caption{font-size:11px;font-weight:800;color:var(--blue);margin-top:8px;text-align:right}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:#f7f9fd;color:#53627d;font-size:11px;font-weight:800}.rate-list{display:grid;gap:0}.rate-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.rate-row:last-child{border-bottom:0}.rate-name{font-weight:800}.rate-sub{font-size:11px;color:var(--muted);margin-top:2px}.rate-actions{display:flex;gap:7px}.rate-btn{border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:#f8faff;color:#52617b;min-width:77px;font-size:12px}.rate-btn strong{display:block;font-size:14px}.rate-btn small{font-size:9px}.rate-btn[aria-pressed="true"]{background:var(--blue);color:white;border-color:#1648c8;box-shadow:0 4px 12px #2458df30}.primary{border:0;border-radius:14px;background:linear-gradient(120deg,#2458df,#3978f6);color:#fff;padding:14px 18px;font-weight:900;box-shadow:0 8px 18px #2458df28}.primary:active{transform:translateY(1px)}.secondary{border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);padding:11px 14px;font-weight:800}.full{width:100%}.calc-state{font-size:11px;font-weight:800;color:#9a6a17;background:#fff7e8;border-radius:999px;padding:7px 10px}.calc-state.done{color:#087650;background:#e8f8f1}.result{background:linear-gradient(125deg,#142b59,#214b9a);border-radius:20px;padding:23px;color:#fff}.result .eyebrow{color:#aebfe1}.emi-number{font-size:clamp(36px,5vw,48px);font-weight:950;letter-spacing:-1.8px;margin:3px 0 18px}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border-top:1px solid #ffffff35;padding-top:15px}.result-item span{display:block;font-size:10px;color:#b8c8e5;letter-spacing:.8px;font-weight:800}.result-item strong{display:block;font-size:17px;margin-top:4px}.result-tenure{border-top:1px solid #ffffff35;padding-top:13px;margin-top:13px;display:flex;justify-content:space-between;gap:10px}.result-tenure span{font-size:11px;color:#c0cee8;font-weight:800}.result-tenure strong{font-size:14px}.empty{color:#b7c6e0;font-size:13px}.menu-backdrop,.share-backdrop{position:fixed;inset:0;background:#09152b70;z-index:30;opacity:0;visibility:hidden;transition:.2s}.menu-backdrop.open,.share-backdrop.open{opacity:1;visibility:visible}.drawer{position:fixed;z-index:31;top:0;right:0;height:100dvh;width:min(350px,88vw);background:#fff;box-shadow:-20px 0 50px #06152b30;padding:24px;transform:translateX(105%);transition:transform .24s ease;display:flex;flex-direction:column;gap:12px}.drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.drawer-link{padding:14px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:left;font-weight:800;color:var(--ink)}.share-dialog{position:fixed;z-index:41;left:50%;top:50%;transform:translate(-50%,-45%);width:min(390px,calc(100vw - 32px));background:#fff;border-radius:20px;padding:22px;box-shadow:0 22px 70px #07142b55;opacity:0;visibility:hidden;transition:.2s}.share-dialog.open{opacity:1;visibility:visible;transform:translate(-50%,-50%)}.share-actions{display:grid;gap:9px;margin-top:15px}.toast{position:fixed;z-index:60;bottom:22px;left:50%;transform:translate(-50%,20px);background:#142b59;color:white;padding:11px 16px;border-radius:12px;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.section-nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.navtab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-weight:800;color:#61708b;font-size:12px}.navtab.active{background:#eaf0ff;color:#214fca;border-color:#b8cbff}.view{display:none}.view.active{display:block}.simple-result{background:#f1f5ff;border:1px solid #dce6ff;border-radius:15px;padding:16px}.simple-result strong{font-size:24px;display:block}.goldbox{background:#fffaf0;border:1px solid #f2dfb5;border-radius:15px;padding:15px}.hidden{display:none!important}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.hero{align-items:flex-start}.hero-chip{min-width:125px}.app{padding:0 14px 45px}}
+@media(max-width:560px){.topbar{height:65px}.brand{font-size:18px}.hero{padding:22px;border-radius:21px;display:block}.hero-chip{margin-top:18px;display:inline-block}.card{padding:17px;border-radius:18px}.fields{grid-template-columns:1fr}.loan-grid{gap:8px}.loan-option{padding:12px 10px;font-size:13px;min-height:55px}.result-grid{grid-template-columns:1fr 1fr}.result-item:last-child{grid-column:1/-1}.rate-row{align-items:flex-start}.rate-actions{gap:5px}.rate-btn{min-width:68px;padding:7px 6px}.control{height:53px}.section-nav{flex-wrap:nowrap;overflow:auto;padding-bottom:5px}.navtab{white-space:nowrap}}
+
+.analysis-block{border-top:1px solid #ffffff35;margin-top:18px;padding-top:16px}
+.analysis-title{font-size:13px;font-weight:900;letter-spacing:.4px;margin-bottom:10px}
+.prepay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.prepay-field label{display:block;font-size:10px;color:#b8c8e5;font-weight:850;letter-spacing:.6px;margin-bottom:6px}
+.prepay-field input{width:100%;height:43px;border:1px solid #ffffff42;border-radius:10px;background:#ffffff12;color:#fff;padding:0 10px;font-weight:750}
+.prepay-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
+.prepay-kpi{background:#ffffff12;border:1px solid #ffffff25;border-radius:12px;padding:10px}
+.prepay-kpi span{display:block;color:#c4d2ec;font-size:9px;font-weight:850;letter-spacing:.5px}
+.prepay-kpi strong{display:block;font-size:15px;margin-top:5px}
+.schedule-wrap{max-height:430px;overflow:auto;border:1px solid #ffffff30;border-radius:12px;margin-top:10px}
+.schedule{width:100%;border-collapse:collapse;font-size:11px;min-width:530px}
+.schedule th,.schedule td{padding:9px 10px;text-align:right;border-bottom:1px solid #ffffff20;white-space:nowrap}
+.schedule th{position:sticky;top:0;background:#1b3b78;color:#dce7fb;font-size:9px;letter-spacing:.4px}
+.schedule th:first-child,.schedule td:first-child{text-align:left}
+.schedule td{color:#f0f4fc}
+.schedule-note{font-size:10px;color:#c2d0e8;margin-top:8px}
+@media(max-width:560px){.prepay-grid{grid-template-columns:1fr}.prepay-summary{grid-template-columns:1fr 1fr}.prepay-kpi:last-child{grid-column:1/-1}}
+
+#prepaymentCard{min-width:0;overflow:hidden}
+#prepaymentCard .prepay-field label{color:#7887a1}
+#prepaymentCard .prepay-field input{width:100%;max-width:100%;min-width:0;height:48px;padding:0 12px;background:#fbfcff;color:var(--ink);border:1.5px solid var(--line);border-radius:12px}
+#prepaymentCard .prepay-kpi{background:#f4f7fd;border:1px solid var(--line);color:var(--ink)}
+#prepaymentCard .prepay-kpi span{color:#71809b}
+#prepaymentCard .prepay-kpi strong{color:#172849}
+#prepaymentCard .analysis-block{border-top:1px solid var(--line)}
+#prepaymentCard .analysis-title{color:#243653}
+.comparison-wrap,.schedule-wrap{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.comparison{width:100%;min-width:500px;border-collapse:collapse;font-size:12px}
+.comparison th,.comparison td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.comparison th{background:#f1f5fc;color:#65748e;font-size:10px}
+.comparison th:first-child,.comparison td:first-child{text-align:left}
+.comparison td{color:#263653}
+.light-schedule{border-color:var(--line);max-height:420px}
+.light-table{min-width:690px}
+.light-table th{background:#edf2fb;color:#5b6b87}
+.light-table td{color:#263653;border-bottom:1px solid var(--line)}
+.light-note{color:#71809b}
+@media(max-width:560px){#prepaymentCard{padding:16px}#prepaymentCard .prepay-grid{grid-template-columns:1fr}#prepaymentCard .prepay-summary{grid-template-columns:1fr 1fr}#prepaymentCard .prepay-kpi:last-child{grid-column:1/-1}.comparison{min-width:500px}.light-table{min-width:690px}}
+
+#creditEligibilityCard{min-width:0;overflow:hidden}
+#creditEligibilityCard .field{min-width:0}
+#creditEligibilityCard .control{width:100%;min-width:0;max-width:100%}
+#creditEligibilityCard .prepay-kpi{background:#f4f7fd;border:1px solid var(--line);color:var(--ink)}
+#creditEligibilityCard .prepay-kpi span{color:#71809b}
+#creditEligibilityCard .prepay-kpi strong{color:#172849}
+.credit-verdict{margin-top:12px;padding:13px 14px;border-radius:12px;background:#f1f5fc;border:1px solid var(--line);color:#263653;font-size:13px;font-weight:750;line-height:1.5}
+.credit-verdict.good{background:#eaf7ef;border-color:#b8e1c5;color:#17633a}
+.credit-verdict.warn{background:#fff6e6;border-color:#f1d49a;color:#81530b}
+.credit-verdict.bad{background:#fff0ef;border-color:#f0c1bd;color:#9a3028}
+@media(max-width:560px){#creditEligibilityCard{padding:16px}#creditEligibilityCard .credit-kpis{grid-template-columns:1fr 1fr}#creditEligibilityCard .credit-kpis .prepay-kpi:last-child{grid-column:1/-1}}
+
+.metal-market{border:1px solid #dce5f4;background:#f7f9fe;border-radius:15px;padding:14px;margin:12px 0 16px;min-width:0}
+.metal-market-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.metal-market-head b{font-size:14px}
+.metal-rate-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.metal-rate-tile{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px;min-width:0}
+.metal-rate-tile span{display:block;font-size:9px;font-weight:900;letter-spacing:.5px;color:#75839b}
+.metal-rate-tile strong{display:block;font-size:18px;letter-spacing:-.4px;margin:5px 0;color:#1b3158;overflow-wrap:anywhere}
+.metal-rate-tile small{font-size:10px;color:#77849a}
+.metal-status{font-size:11px;font-weight:800;margin-top:10px;padding:9px 10px;border-radius:9px;background:#edf2fb;color:#50617f}
+.metal-status.fresh{background:#eaf7ef;color:#17633a}
+.metal-status.stale{background:#fff4df;color:#81530b}
+.metal-status.error{background:#fff0ef;color:#9a3028}
+.metal-source{font-size:10px;line-height:1.5;color:#7a879c;margin-top:9px}
+.metal-source a{color:#2458df;text-decoration:underline}
+@media(max-width:560px){.metal-market{padding:11px}.metal-rate-grid{grid-template-columns:1fr 1fr}.metal-rate-tile:last-child{grid-column:1/-1}.metal-rate-tile strong{font-size:16px}.metal-market-head{align-items:flex-start}.metal-market-head .secondary{padding:9px 10px;white-space:nowrap}}
+
+.wealth-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;min-width:0}
+.wealth-grid>.card{min-width:0;overflow:hidden}
+.wealth-grid .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:760px){.wealth-grid{grid-template-columns:1fr}.wealth-grid .fields{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.wealth-grid .fields{grid-template-columns:1fr}}
+
+/* Wealth category selector — mirrors the loan-category interaction */
+.wealth-picker{margin-bottom:18px}
+.wealth-picker-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.wealth-picker-head h2{margin:5px 0 0}
+.wealth-current{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border:1px solid #dce4f2;border-radius:999px;background:#f6f8fc;color:#53627d;font-size:13px;font-weight:950;letter-spacing:.8px;white-space:nowrap}
+.wealth-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.wealth-choice{position:relative;display:flex;align-items:center;gap:12px;min-width:0;min-height:88px;padding:18px 20px;border:2px solid #e0e6ef;border-radius:22px;background:#fff;color:#17243d;font-size:clamp(15px,2vw,20px);font-weight:850;text-align:left;cursor:pointer;transition:background .18s,border-color .18s,color .18s,box-shadow .18s,transform .18s}
+.wealth-choice:hover{border-color:#9bb5ed;transform:translateY(-1px)}
+.wealth-choice.selected{background:linear-gradient(110deg,#2456d9,#3977f4);border-color:#1747bd;color:#fff;box-shadow:0 12px 26px rgba(39,91,211,.18)}
+.wealth-choice-icon{font-size:24px;flex:0 0 auto}
+.wealth-check{display:none;margin-left:auto;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#fff;color:#2456d9;align-items:center;justify-content:center;font-size:21px;font-weight:950}
+.wealth-choice.selected .wealth-check{display:flex}
+.wealth-panel{display:none;min-width:0}
+.wealth-panel.active{display:block}
+.wealth-panel>.layout{margin-top:0}
+.wealth-panel>.card{width:100%}
+@media(max-width:560px){
+ .wealth-picker{padding:18px}
+ .wealth-picker-head{align-items:flex-start;flex-direction:column}
+ .wealth-current{align-self:flex-end;margin-top:-4px}
+ .wealth-choice-grid{gap:10px}
+ .wealth-choice{min-height:78px;padding:13px 12px;border-radius:17px;font-size:14px;gap:8px}
+ .wealth-choice-icon{font-size:21px}
+ .wealth-check{width:28px;height:28px;flex-basis:28px;font-size:18px}
+}
+
+.deposit-results,.gst-results{display:grid;grid-template-columns:1fr auto;column-gap:18px;row-gap:8px;align-items:center}
+.deposit-results strong,.gst-results strong{text-align:right}
+@media(max-width:560px){.deposit-results,.gst-results{grid-template-columns:minmax(0,1fr) auto;column-gap:10px}.deposit-results strong,.gst-results strong{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+ <div class="brand"><div class="brandmark">F</div>FinPulse <span class="pill">V4</span></div>
+ <div class="top-actions">
+  <button type="button" class="iconbtn" id="shareBtn" aria-label="Share FinPulse" title="Share">↗</button>
+  <button type="button" class="iconbtn" id="menuBtn" aria-label="Open menu" aria-expanded="false" title="Menu">☰</button>
+ </div>
+</header>
+<section class="hero">
+ <div><div class="eyebrow">PERSONAL FINANCE INTELLIGENCE</div><h1>Make every financial<br>decision count.</h1><p>Plan loans, understand repayment costs and explore your wealth scenarios with transparent calculations.</p></div>
+ <div class="hero-chip"><span class="eyebrow">YOUR FINANCE WORKSPACE</span><strong>One clear view.</strong><span class="tiny" style="color:#c5d4ed">Calculations · Planning · Insights</span></div>
+</section>
+<nav class="section-nav" aria-label="Main sections">
+ <button class="navtab active" data-view="loans">Loans & EMI</button><button class="navtab" data-view="wealth">Wealth planner</button><button class="navtab" data-view="deposits">FD / RD</button><button class="navtab" data-view="gst">GST</button>
+</nav>
+<main>
+<section class="view active" id="view-loans">
+<div class="layout">
+<div class="stack">
+ <section class="card">
+  <div class="cardhead"><div><div class="eyebrow">CREDIT INTELLIGENCE</div><h2>Choose your loan</h2></div><span class="pill" id="activeLoanBadge">HOME LOAN</span></div>
+  <div class="loan-grid" id="loanChoices">
+   <button type="button" class="loan-option selected" data-loan="home"><span class="name">🏠 Home loan</span><span class="check">✓</span></button>
+   <button type="button" class="loan-option" data-loan="car"><span class="name">🚗 Car / auto</span><span class="check">✓</span></button>
+   <button type="button" class="loan-option" data-loan="two"><span class="name">🛵 Two-wheeler</span><span class="check">✓</span></button>
+   <button type="button" class="loan-option" data-loan="personal"><span class="name">💳 Personal</span><span class="check">✓</span></button>
+   <button type="button" class="loan-option" data-loan="education"><span class="name">🎓 Education</span><span class="check">✓</span></button>
+   <button type="button" class="loan-option" data-loan="gold"><span class="name">🪙 Gold loan</span><span class="check">✓</span></button>
+   <button type="button" class="loan-option" data-loan="business"><span class="name">🏢 Business / LAP</span><span class="check">✓</span></button>
+  </div>
+ </section>
+ <section class="card">
+  <div class="cardhead"><div><div class="eyebrow">LOAN CONFIGURATION</div><h2>Enter loan details</h2></div><span class="pill">Manual calculation</span></div>
+  <div class="fields">
+   <div class="field"><label for="principal">Loan amount <span id="principalFormatted">₹50,00,000</span></label><input class="control" id="principal" type="number" min="1" step="1000" value="5000000"><input class="range" id="principalRange" type="range" min="10000" max="10000000" step="10000" value="5000000"><div class="field-footer"><span>₹10,000</span><span>₹1 Crore</span></div></div>
+   <div class="field"><label for="interest">Interest rate (% p.a.)</label><input class="control" id="interest" type="number" min="0" max="40" step=".05" value="8.5"><input class="range" id="interestRange" type="range" min="0" max="40" step=".05" value="8.5"><div class="field-footer"><span>0%</span><span>40%</span></div></div>
+   <div class="field"><label for="tenureValue">Loan tenure <span id="tenureCaption">Duration: 20 years</span></label>
+    <div class="unit-switch" role="group" aria-label="Tenure unit"><button type="button" class="unit-btn" id="unitYears" aria-pressed="true">YEARS ✓</button><button type="button" class="unit-btn" id="unitMonths" aria-pressed="false">MONTHS</button></div>
+    <input class="control" id="tenureValue" type="number" min="1" max="40" step="1" value="20" style="margin-top:10px"><input class="range" id="tenureRange" type="range" min="1" max="40" step="1" value="20">
+    <div class="field-footer"><span id="tenureMin">1 year</span><span id="tenureMax">40 years</span></div>
+   </div>
+   <div class="field"><label for="processingFee">Processing fee (₹)</label><input class="control" id="processingFee" type="number" min="0" step="500" value="5000"><div class="field-footer"><span>Optional estimate</span><span>Added to cost view</span></div></div>
+  </div>
+  <div id="goldInputs" class="goldbox hidden" style="margin-top:18px">
+   <div class="cardhead"><div><b>Gold / silver pledge reference</b><div class="tiny muted">Manual quote only — no fabricated live price</div></div><span class="pill">Gold loan</span></div>
+   <div class="metal-market">
+    <div class="metal-market-head">
+     <div><div class="eyebrow">INDIA BULLION BENCHMARK</div><b>Gold & silver reference rates</b></div>
+     <button type="button" class="secondary" id="refreshMetalRates">Refresh rates</button>
+    </div>
+    <div class="metal-rate-grid">
+     <div class="metal-rate-tile"><span>GOLD 24K · ₹/g</span><strong id="gold24Rate">—</strong><small id="gold24Change">Awaiting refresh</small></div>
+     <div class="metal-rate-tile"><span>GOLD 22K · ₹/g</span><strong id="gold22Rate">—</strong><small id="gold22Change">Awaiting refresh</small></div>
+     <div class="metal-rate-tile"><span>SILVER 999 · ₹/g</span><strong id="silverGramRate">—</strong><small id="silverChange">Awaiting refresh</small></div>
+    </div>
+    <div class="metal-status" id="metalRateStatus" role="status">Rates have not been fetched. Tap Refresh rates to request the latest available daily benchmark.</div>
+    <div class="metal-source">Data: <a href="https://snapdata.dev/docs/quickstart/" target="_blank" rel="noopener">SnapData</a>, republishing IBJA benchmark observations. Daily data, not a live intraday exchange feed. Silver API value is converted from ₹/kg to ₹/g. <a href="https://ibja.co/" target="_blank" rel="noopener">IBJA source</a>.</div>
+   </div>
+   <div class="fields">
+    <div class="field"><label for="metalType">Metal</label><select class="control" id="metalType"><option value="gold22">Gold 22K</option><option value="gold24">Gold 24K</option><option value="silver">Silver 999</option></select></div>
+    <div class="field"><label for="metalRate">Rate per gram (₹)</label><input class="control" id="metalRate" type="number" min="0" value="0"></div>
+    <div class="field"><label for="metalWeight">Net weight (g)</label><input class="control" id="metalWeight" type="number" min="0" value="20"></div>
+    <div class="field"><label for="metalLtv">Illustrative LTV (%)</label><input class="control" id="metalLtv" type="number" min="0" max="100" value="75"></div>
+   </div>
+   <button type="button" class="secondary full" id="useMetalValue" style="margin-top:12px">Estimate and use pledge value</button>
+   <div class="tiny muted" id="metalEstimate" style="margin-top:8px">Enter a current quote from a trusted source.</div>
+  </div>
+ </section>
+ <section class="card">
+  <div class="cardhead"><div><div class="eyebrow">RATE DISCOVERY</div><h2>Compare lender assumptions</h2></div><span class="pill">Illustrative only</span></div>
+  <div class="rate-list" id="bankRates"></div>
+  <p class="tiny muted" style="margin:13px 0 0">These are editable comparison assumptions, not verified live lender offers. Confirm the effective rate, fees and eligibility directly with each lender.</p>
+ </section>
+ <section class="card">
+  <div class="cardhead"><div><div class="eyebrow">CALCULATION CONTROL</div><h2>Ready to calculate?</h2></div><span class="calc-state" id="calcStatus">Not calculated</span></div>
+  <button type="button" class="primary full" id="calculateBtn">Calculate EMI</button>
+  <p class="tiny muted" style="margin:10px 0 0">EMI is calculated only when you press this button. Any input change marks the previous result as outdated.</p>
+ </section>
+ <section class="result" id="resultPanel" aria-live="polite">
+  <div class="eyebrow">YOUR REPAYMENT SUMMARY</div><div class="empty" id="resultEmpty">Enter your loan details and press Calculate EMI.</div>
+  <div id="resultData" class="hidden">
+   <div class="eyebrow" style="margin-top:7px">MONTHLY EMI</div><div class="emi-number" id="emiOutput">—</div>
+   <div class="result-grid">
+    <div class="result-item"><span>PRINCIPAL</span><strong id="principalOutput">—</strong></div>
+    <div class="result-item"><span>TOTAL INTEREST</span><strong id="interestOutput">—</strong></div>
+    <div class="result-item"><span>TOTAL PAYABLE</span><strong id="payableOutput">—</strong></div>
+   </div>
+   <div class="result-tenure"><span>LOAN TENURE</span><strong id="tenureOutput">—</strong></div>
+   <div class="result-tenure"><span>ESTIMATED TOTAL COST INCLUDING FEE</span><strong id="costOutput">—</strong></div>
+     </div>
+ </section>
+ <section class="card" id="prepaymentCard">
+  <div class="cardhead"><div><div class="eyebrow">LOAN OPTIMIZATION</div><h2>Prepayment & comparison</h2></div><span class="pill">Separate scenario</span></div>
+  <p class="tiny muted">The original EMI summary above is the baseline and will not change. Configure prepayment below, then calculate its impact separately.</p>
+  <div class="prepay-grid">
+   <div class="prepay-field"><label for="extraMonthly">EXTRA MONTHLY PAYMENT (₹)</label><input id="extraMonthly" type="number" min="0" step="500" value="0"></div>
+   <div class="prepay-field"><label for="lumpPrepay">ONE-TIME PREPAYMENT AFTER 12 MONTHS (₹)</label><input id="lumpPrepay" type="number" min="0" step="1000" value="0"></div>
+  </div>
+  <button type="button" class="primary full" id="calculatePrepayment" style="margin-top:14px">Calculate prepayment impact</button>
+  <div class="prepay-summary" id="prepaySummary" aria-live="polite">
+   <div class="prepay-kpi"><span>INTEREST SAVED</span><strong id="savedInterest">—</strong></div>
+   <div class="prepay-kpi"><span>TIME SAVED</span><strong id="savedTime">—</strong></div>
+   <div class="prepay-kpi"><span>NEW PAYOFF TIME</span><strong id="newPayoff">—</strong></div>
+  </div>
+  <div class="analysis-block light-analysis">
+   <div class="analysis-title">BASELINE VS PREPAYMENT COMPARISON</div>
+   <div class="comparison-wrap"><table class="comparison"><thead><tr><th>METRIC</th><th>ORIGINAL LOAN</th><th>WITH PREPAYMENT</th></tr></thead><tbody id="comparisonRows"><tr><td colspan="3">Calculate the original EMI, then calculate prepayment impact.</td></tr></tbody></table></div>
+  </div>
+  <div class="analysis-block light-analysis">
+   <div class="analysis-title">PREPAYMENT AMORTIZATION SCHEDULE</div>
+   <div class="schedule-wrap light-schedule"><table class="schedule light-table"><thead><tr><th>MONTH</th><th>OPENING BALANCE</th><th>EMI + EXTRA</th><th>INTEREST</th><th>PRINCIPAL</th><th>PREPAYMENT</th><th>CLOSING BALANCE</th></tr></thead><tbody id="scheduleRows"><tr><td colspan="7">Calculate prepayment impact to generate the revised schedule.</td></tr></tbody></table></div>
+   <div class="schedule-note light-note" id="scheduleNote">This schedule will include additional monthly and lump-sum payments.</div>
+  </div>
+ </section>
+ <section class="card" id="creditEligibilityCard">
+  <div class="cardhead"><div><div class="eyebrow">CREDIT INTELLIGENCE</div><h2>Loan affordability & FOIR</h2></div><span class="pill">Estimate</span></div>
+  <p class="tiny muted">Estimate repayment affordability using monthly income and existing EMIs. This is not a CIBIL score, lender approval or a guarantee of eligibility.</p>
+  <div class="fields">
+   <div class="field"><label for="monthlyIncome">NET MONTHLY INCOME (₹)</label><input id="monthlyIncome" class="control" type="number" min="0" step="1000" value="75000"></div>
+   <div class="field"><label for="existingEmi">EXISTING MONTHLY EMI OBLIGATIONS (₹)</label><input id="existingEmi" class="control" type="number" min="0" step="500" value="5000"></div>
+   <div class="field"><label for="foirLimit">TARGET FOIR LIMIT (%)</label><input id="foirLimit" class="control" type="number" min="1" max="100" step="1" value="40"></div>
+  </div>
+  <button type="button" class="primary full" id="calculateAffordability">Calculate affordability</button>
+  <div class="prepay-summary credit-kpis" aria-live="polite">
+   <div class="prepay-kpi"><span>FOIR AFTER THIS LOAN</span><strong id="foirOutput">—</strong></div>
+   <div class="prepay-kpi"><span>AVAILABLE EMI CAPACITY</span><strong id="emiCapacityOutput">—</strong></div>
+   <div class="prepay-kpi"><span>ESTIMATED ELIGIBLE LOAN</span><strong id="eligibleLoanOutput">—</strong></div>
+  </div>
+  <div class="credit-verdict" id="creditVerdict" role="status">Calculate EMI first, then enter income and existing obligations to estimate affordability.</div>
+  <p class="tiny muted">FOIR = (existing monthly obligations + proposed EMI) ÷ net monthly income × 100. The selected FOIR limit is a planning assumption; lenders use their own policies and may include other obligations.</p>
+ </section>
+</div>
+<aside class="stack">
+ <section class="card"><div class="cardhead"><div><div class="eyebrow">QUICK INSIGHT</div><h2>Repayment basics</h2></div><span>ⓘ</span></div><p class="muted" style="margin:0;font-size:13px">A longer tenure usually lowers the monthly EMI but increases total interest. Compare total repayment—not just the monthly amount—before choosing a loan.</p></section>
+ <section class="card"><div class="cardhead"><div><div class="eyebrow">HOW IT WORKS</div><h2>Calculation sequence</h2></div></div><ol class="muted" style="padding-left:19px;font-size:13px;display:grid;gap:10px"><li>Select your loan category.</li><li>Enter principal, annual rate and tenure.</li><li>Choose Years or Months. The numeric field and slider stay synchronized.</li><li>Press Calculate EMI to generate the repayment summary.</li></ol></section>
+ <section class="card"><div class="cardhead"><div><div class="eyebrow">DATA TRANSPARENCY</div><h2>What is estimated?</h2></div></div><p class="muted" style="font-size:12px;margin:0">This calculator uses a standard monthly reducing-balance EMI formula. Actual lender schedules may vary because of disbursement timing, floating-rate resets, daily interest, fees and rounding.</p></section>
+</aside>
+</div>
+</section>
+<section class="view" id="view-wealth">
+<section class="card wealth-picker">
+ <div class="wealth-picker-head">
+  <div><div class="eyebrow">WEALTH INTELLIGENCE</div><h2>Choose your investment plan</h2></div>
+  <span class="wealth-current" id="wealthCurrentBadge">GOAL SIP</span>
+ </div>
+ <div class="wealth-choice-grid" role="group" aria-label="Choose wealth calculator">
+  <button type="button" class="wealth-choice selected" data-wealth="goal" aria-pressed="true"><span class="wealth-choice-icon">🎯</span><span>Goal-based SIP</span><span class="wealth-check">✓</span></button>
+  <button type="button" class="wealth-choice" data-wealth="sip" aria-pressed="false"><span class="wealth-choice-icon">📈</span><span>Monthly SIP</span><span class="wealth-check">✓</span></button>
+  <button type="button" class="wealth-choice" data-wealth="lump" aria-pressed="false"><span class="wealth-choice-icon">💰</span><span>Lumpsum</span><span class="wealth-check">✓</span></button>
+  <button type="button" class="wealth-choice" data-wealth="swp" aria-pressed="false"><span class="wealth-choice-icon">🏦</span><span>SWP / Withdrawal</span><span class="wealth-check">✓</span></button>
+ </div>
+</section>
+<div class="wealth-panel" data-wealth-panel="goal"><div class="layout"><section class="card stack"><div><div class="eyebrow">WEALTH PLANNER</div><h2>Goal-based SIP calculator</h2></div>
+<div class="fields">
+<div class="field"><label for="goalTarget">Target amount today (₹)</label><input id="goalTarget" class="control" type="number" value="2500000" min="0"></div>
+<div class="field"><label for="goalYears">Years to goal</label><input id="goalYears" class="control" type="number" value="10" min="1"></div>
+<div class="field"><label for="goalReturn">Expected return (% p.a.)</label><input id="goalReturn" class="control" type="number" value="10" min="0" step=".1"></div>
+<div class="field"><label for="goalInflation">Inflation (% p.a.)</label><input id="goalInflation" class="control" type="number" value="6" min="0" step=".1"></div>
+<div class="field"><label for="goalStep">Annual SIP step-up (%)</label><input id="goalStep" class="control" type="number" value="10" min="0"></div>
+</div><button type="button" class="primary" id="goalCalculate">Calculate required SIP</button>
+<div class="simple-result"><span class="tiny muted">FUTURE GOAL VALUE</span><strong id="goalFuture">—</strong><span class="tiny muted">STARTING MONTHLY SIP</span><strong id="goalSip">—</strong></div>
+<p class="tiny muted">Scenario estimate only. Market returns are not guaranteed. Contributions are assumed at month-end; taxes, fees and exit loads are excluded.</p></section>
+<aside class="card"><div class="eyebrow">PLANNING NOTE</div><h2>Use assumptions carefully</h2><p class="muted" style="font-size:13px">Inflation increases the future amount required to meet a goal. Expected investment returns are uncertain; test multiple return assumptions before committing.</p></aside></div></div><div class="wealth-panel" data-wealth-panel="sip"><section class="card stack">
+  <div><div class="eyebrow">MONTHLY INVESTING</div><h2>SIP wealth projection</h2></div>
+  <div class="fields">
+   <div class="field"><label for="sipMonthly">MONTHLY SIP (₹)</label><input id="sipMonthly" class="control" type="number" min="1" value="5000"></div>
+   <div class="field"><label for="sipYears">INVESTMENT PERIOD (YEARS)</label><input id="sipYears" class="control" type="number" min="1" max="60" value="15"></div>
+   <div class="field"><label for="sipReturn">EXPECTED RETURN (% P.A.)</label><input id="sipReturn" class="control" type="number" min="0" max="60" step=".1" value="12"></div>
+   <div class="field"><label for="sipStep">ANNUAL SIP STEP-UP (%)</label><input id="sipStep" class="control" type="number" min="0" max="100" value="10"></div>
+  </div>
+  <button type="button" class="primary full" id="sipCalculate">Calculate SIP</button>
+  <div class="simple-result"><span class="tiny muted">TOTAL INVESTED</span><strong id="sipInvested">—</strong><span class="tiny muted">ESTIMATED WEALTH</span><strong id="sipFuture">—</strong><span class="tiny muted">ESTIMATED GAIN</span><strong id="sipGain">—</strong></div>
+  <p class="tiny muted">Monthly compounding at assumed annual rate ÷ 12. SIP deposits are made at month-end; step-up applies every 12 months.</p>
+ </section></div><div class="wealth-panel" data-wealth-panel="lump"><section class="card stack">
+  <div><div class="eyebrow">ONE-TIME INVESTMENT</div><h2>Lumpsum calculator</h2></div>
+  <div class="fields">
+   <div class="field"><label for="lumpAmount">INVESTMENT AMOUNT (₹)</label><input id="lumpAmount" class="control" type="number" min="1" value="500000"></div>
+   <div class="field"><label for="lumpYears">INVESTMENT PERIOD (YEARS)</label><input id="lumpYears" class="control" type="number" min="1" max="60" value="10"></div>
+   <div class="field"><label for="lumpReturn">EXPECTED RETURN (% P.A.)</label><input id="lumpReturn" class="control" type="number" min="0" max="60" step=".1" value="12"></div>
+  </div>
+  <button type="button" class="primary full" id="lumpCalculate">Calculate lumpsum</button>
+  <div class="simple-result"><span class="tiny muted">INVESTED AMOUNT</span><strong id="lumpInvested">—</strong><span class="tiny muted">ESTIMATED FUTURE VALUE</span><strong id="lumpFuture">—</strong><span class="tiny muted">ESTIMATED GAIN</span><strong id="lumpGain">—</strong></div>
+  <p class="tiny muted">Monthly compounding using the nominal annual return divided by 12. Actual investment returns fluctuate.</p>
+ </section></div><div class="wealth-panel" data-wealth-panel="swp"><section class="card stack">
+  <div><div class="eyebrow">SYSTEMATIC WITHDRAWAL</div><h2>SWP sustainability planner</h2></div>
+  <div class="fields">
+   <div class="field"><label for="swpCorpus">STARTING CORPUS (₹)</label><input id="swpCorpus" class="control" type="number" min="1" value="2500000"></div>
+   <div class="field"><label for="swpMonthly">MONTHLY WITHDRAWAL (₹)</label><input id="swpMonthly" class="control" type="number" min="1" value="20000"></div>
+   <div class="field"><label for="swpReturn">EXPECTED RETURN (% P.A.)</label><input id="swpReturn" class="control" type="number" min="0" max="60" step=".1" value="8"></div>
+   <div class="field"><label for="swpYears">MAXIMUM PERIOD (YEARS)</label><input id="swpYears" class="control" type="number" min="1" max="100" value="40"></div>
+   <div class="field"><label for="swpInflation">ANNUAL WITHDRAWAL STEP-UP (%)</label><input id="swpInflation" class="control" type="number" min="0" max="100" value="0"></div>
+  </div>
+  <button type="button" class="primary full" id="swpCalculate">Calculate SWP</button>
+  <div class="simple-result"><span class="tiny muted">TOTAL WITHDRAWN</span><strong id="swpWithdrawn">—</strong><span class="tiny muted">ENDING CORPUS</span><strong id="swpEnding">—</strong><span class="tiny muted">SUSTAINED PERIOD</span><strong id="swpDuration">—</strong></div>
+  <p class="tiny muted" id="swpNote">Monthly growth is applied before each month-end withdrawal. Projection is capped at the selected period.</p>
+ </section></div>
+</section>
+<section class="view" id="view-deposits">
+<div class="layout"><section class="card stack"><div><div class="eyebrow">FIXED & RECURRING DEPOSITS</div><h2>FD / RD maturity estimator</h2></div><div class="fields">
+<div class="field"><label for="depositType">Deposit type</label><select class="control" id="depositType"><option value="fd">Fixed deposit</option><option value="rd">Recurring deposit</option></select></div>
+<div class="field"><label for="depositAmount">Amount (₹)</label><input class="control" id="depositAmount" type="number" value="100000" min="0"></div>
+<div class="field"><label for="depositRate">Annual interest (%)</label><input class="control" id="depositRate" type="number" value="7" min="0" step=".1"></div>
+<div class="field"><label for="depositYears">Tenure (years)</label><input class="control" id="depositYears" type="number" value="5" min="1" max="50" step=".25"></div>
+<div class="field"><label for="depositFrequency">FD compounding frequency</label><select class="control" id="depositFrequency"><option value="4" selected>Quarterly</option><option value="12">Monthly</option><option value="2">Half-yearly</option><option value="1">Yearly</option></select></div>
+<div class="field"><label for="depositTaxRate">Estimated tax rate on interest (%)</label><input class="control" id="depositTaxRate" type="number" value="0" min="0" max="50" step=".5"></div>
+</div><button type="button" class="primary" id="depositCalculate">Calculate maturity</button>
+<div class="simple-result deposit-results"><span class="tiny muted">GROSS MATURITY VALUE</span><strong id="depositMaturity">—</strong><span class="tiny muted">GROSS INTEREST</span><strong id="depositInterest">—</strong><span class="tiny muted">ESTIMATED TAX ON INTEREST</span><strong id="depositTax">—</strong><span class="tiny muted">ESTIMATED VALUE AFTER TAX</span><strong id="depositNet">—</strong></div>
+<p class="tiny muted" id="depositAssumption">FD uses the selected compounding frequency. RD uses monthly instalments with quarterly-equivalent compounding and month-end deposits. Estimated tax is a simplified assumption, not a tax/TDS determination; actual tax depends on total income and applicable rules.</p></section></div>
+</section>
+<section class="view" id="view-gst">
+<div class="layout"><section class="card stack"><div><div class="eyebrow">TAX TOOL</div><h2>GST calculator</h2></div><div class="fields">
+<div class="field"><label for="gstMode">Amount mode</label><select class="control" id="gstMode"><option value="exclusive">GST exclusive</option><option value="inclusive">GST inclusive</option></select></div>
+<div class="field"><label for="gstAmount">Amount (₹)</label><input class="control" id="gstAmount" type="number" value="10000" min="0"></div>
+<div class="field"><label for="gstRate">GST rate (%)</label><select class="control" id="gstRate"><option>5</option><option>12</option><option selected>18</option><option>28</option></select></div>
+<div class="field"><label for="gstSupply">Supply type</label><select class="control" id="gstSupply"><option value="intra">Intra-state (CGST + SGST)</option><option value="inter">Inter-state (IGST)</option></select></div>
+</div><button type="button" class="primary" id="gstCalculate">Calculate GST</button><div class="simple-result gst-results"><span class="tiny muted">TAXABLE VALUE</span><strong id="gstBase">—</strong><span class="tiny muted">TOTAL GST</span><strong id="gstTax">—</strong><span class="tiny muted">CGST</span><strong id="gstCgst">—</strong><span class="tiny muted">SGST</span><strong id="gstSgst">—</strong><span class="tiny muted">IGST</span><strong id="gstIgst">—</strong><span class="tiny muted">TOTAL INVOICE VALUE</span><strong id="gstTotal">—</strong></div>
+<p class="tiny muted">For intra-state supplies, GST is split equally into CGST and SGST. For inter-state supplies, the full GST is shown as IGST. Confirm place-of-supply and applicable rate before invoicing.</p></section></div>
+</section>
+</main>
+<footer class="tiny muted" style="padding:25px 3px">FinPulse V4 · Educational planning tool. Not a lender offer, tax opinion or investment advice.</footer>
+</div>
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+ <div class="drawer-head"><div class="brand"><div class="brandmark">F</div>FinPulse menu</div><button type="button" class="iconbtn" id="closeMenu" aria-label="Close menu">×</button></div>
+ <button type="button" class="drawer-link" data-dest="loans">Loans & EMI</button><button type="button" class="drawer-link" data-dest="wealth">Wealth planner</button><button type="button" class="drawer-link" data-dest="deposits">FD / RD</button><button type="button" class="drawer-link" data-dest="gst">GST calculator</button>
+ <div style="margin-top:auto" class="tiny muted">FinPulse V4 · Personal finance workspace</div>
+</aside>
+<div class="share-backdrop" id="shareBackdrop"></div>
+<section class="share-dialog" id="shareDialog" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+ <div class="cardhead"><h2 id="shareTitle">Share FinPulse</h2><button type="button" class="iconbtn" id="closeShare" aria-label="Close share">×</button></div>
+ <p class="muted" style="font-size:13px">Share this finance workspace with someone.</p>
+ <div class="share-actions"><button type="button" class="primary full" id="nativeShare">Share link</button><button type="button" class="secondary full" id="copyLink">Copy page link</button></div>
+ <p class="tiny muted" id="shareFeedback" aria-live="polite"></p>
+</section>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const money=n=>'₹'+(Number(n)||0).toLocaleString('en-IN',{maximumFractionDigits:0});
+const state={loan:'home',unit:'years',months:240,selectedBank:null,result:null,metalRates:null};
+const loans={
+ home:{label:'HOME LOAN',principal:5000000,rate:8.5,years:20},
+ car:{label:'CAR / AUTO',principal:1000000,rate:9.2,years:5},
+ two:{label:'TWO-WHEELER',principal:150000,rate:11.5,years:3},
+ personal:{label:'PERSONAL LOAN',principal:500000,rate:13.5,years:3},
+ education:{label:'EDUCATION LOAN',principal:1000000,rate:9.5,years:7},
+ gold:{label:'GOLD LOAN',principal:300000,rate:10.5,years:1},
+ business:{label:'BUSINESS / LAP',principal:2500000,rate:11,years:10}
+};
+const banks=[
+ ['Karur Vysya Bank',8.05,7.95],['PNB',7.70,7.55],['SBI',8.75,8.60],['Canara Bank',8.80,8.65],
+ ['ICICI Bank',9.15,9.00],['HDFC Bank',9.30,9.15],['Manappuram Finance',9.90,9.75],['Muthoot Finance',12,11.75]
+];
+function toast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2300)}
+function currentTenureValue(){return state.unit==='years'?Math.round(state.months/12):state.months}
+function syncTenureUI(){
+ const years=state.unit==='years',v=currentTenureValue();
+ $('unitYears').setAttribute('aria-pressed',String(years));$('unitMonths').setAttribute('aria-pressed',String(!years));
+ $('unitYears').textContent=years?'YEARS ✓':'YEARS';$('unitMonths').textContent=!years?'MONTHS ✓':'MONTHS';
+ $('tenureValue').min='1';$('tenureValue').max=years?'40':'480';$('tenureValue').step='1';$('tenureValue').value=String(v);
+ $('tenureRange').min='1';$('tenureRange').max=years?'40':'480';$('tenureRange').step='1';$('tenureRange').value=String(v);
+ $('tenureCaption').textContent='Duration: '+(years?(v+' year'+(v===1?'':'s')):(v+' month'+(v===1?'':'s')));
+ $('tenureMin').textContent=years?'1 year':'1 month';$('tenureMax').textContent=years?'40 years':'480 months';
+}
+function invalidate(){state.result=null;$('calcStatus').textContent='Inputs changed';$('calcStatus').classList.remove('done');$('resultData').classList.add('hidden');$('resultEmpty').classList.remove('hidden');$('resultEmpty').textContent='Inputs changed. Press Calculate EMI to refresh the result.';$('comparisonRows').innerHTML='<tr><td colspan="3">Recalculate the original EMI, then calculate prepayment impact.</td></tr>';$('scheduleRows').innerHTML='<tr><td colspan="7">Recalculate the original EMI, then calculate prepayment impact.</td></tr>';$('scheduleNote').textContent='Waiting for updated loan inputs.';$('foirOutput').textContent='—';$('emiCapacityOutput').textContent='—';$('eligibleLoanOutput').textContent='—';$('creditVerdict').className='credit-verdict';$('creditVerdict').textContent='Loan inputs changed. Recalculate EMI before checking affordability.'}
+function setMonthsFromVisible(value){const v=Math.max(1,Math.min(state.unit==='years'?40:480,Math.round(Number(value)||1)));state.months=state.unit==='years'?v*12:v;syncTenureUI();invalidate()}
+function setUnit(unit){if(unit!=='years'&&unit!=='months')return;if(unit==='years'&&state.unit==='months')state.months=Math.max(12,Math.round(state.months/12)*12);state.unit=unit;syncTenureUI();invalidate()}
+function formatPrincipal(){const p=Math.max(0,Number($('principal').value)||0);$('principalFormatted').textContent=money(p)}
+function syncPair(numberId,rangeId,source){
+ const num=$(numberId),range=$(rangeId);
+ const min=Number(range.min),max=Number(range.max);
+ let value=Number(source==='range'?range.value:num.value);
+ if(!Number.isFinite(value))return;
+ value=Math.max(min,Math.min(max,value));
+ if(source==='range')num.value=String(value);else range.value=String(value);
+ if(numberId==='principal')formatPrincipal();
+ invalidate();
+}
+function setLoan(key){
+ const d=loans[key];if(!d)return;
+ state.loan=key;state.months=d.years*12;state.selectedBank=null;
+ $('activeLoanBadge').textContent=d.label;
+ document.querySelectorAll('[data-loan]').forEach(b=>{const active=b.dataset.loan===key;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active))});
+ $('principal').value=d.principal;$('principalRange').value=d.principal;
+ $('principalRange').max=Math.max(10000000,d.principal*2);
+ $('interest').value=d.rate;$('interestRange').value=d.rate;
+ $('processingFee').value=key==='gold'?0:5000;
+ $('goldInputs').classList.toggle('hidden',key!=='gold');
+ document.querySelectorAll('[data-bank]').forEach(b=>b.setAttribute('aria-pressed','false'));
+ $('bankRates').innerHTML='';
+ renderBanks();formatPrincipal();syncTenureUI();invalidate();
+}
+function renderBanks(){
+ $('bankRates').innerHTML=banks.map((b,i)=>`<div class="rate-row"><div><div class="rate-name">${b[0]}</div><div class="rate-sub">Illustrative rate assumption</div></div><div class="rate-actions"><button type="button" class="rate-btn" data-bank="${i}:regular" aria-pressed="false"><strong>${b[1].toFixed(2)}%</strong><small>Regular</small></button><button type="button" class="rate-btn" data-bank="${i}:preferred" aria-pressed="false"><strong>${b[2].toFixed(2)}%</strong><small>Preferred</small></button></div></div>`).join('');
+}
+function chooseBank(token,button){
+ const [idx,tier]=token.split(':');const bank=banks[Number(idx)];const rate=bank[tier==='regular'?1:2];
+ state.selectedBank=token;$('interest').value=rate;$('interestRange').value=rate;
+ document.querySelectorAll('[data-bank]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ invalidate();
+}
+function simulateSchedule(p,annual,n,baseEmi,extra=0,lump=0){
+ const monthly=annual/1200,rows=[];let balance=p,totalInterest=0,totalPaid=0,month=0;
+ while(balance>0.005&&month<1200){
+  month++;
+  const opening=balance;
+  const interest=opening*monthly;
+  const scheduled=Math.min(baseEmi,opening+interest);
+  let extraPaid=Math.min(Math.max(0,extra),Math.max(0,opening+interest-scheduled));
+  let lumpPaid=0;
+  if(month===12&&lump>0)lumpPaid=Math.min(lump,Math.max(0,opening+interest-scheduled-extraPaid));
+  const payment=Math.min(opening+interest,scheduled+extraPaid+lumpPaid);
+  const principalPaid=Math.max(0,payment-interest);
+  balance=Math.max(0,opening-principalPaid);
+  totalInterest+=interest;totalPaid+=payment;
+  rows.push({month,opening,payment,scheduledPayment:scheduled,extraPaid,lumpPaid,interest,principalPaid,closing:balance});
+ }
+ return {rows,totalInterest,totalPaid,months:month,closing:balance};
+}
+function calculatePrepayment(){
+ if(!state.result){toast('Calculate the original EMI first');return}
+ const base=state.result,extra=Math.max(0,Number($('extraMonthly').value)||0),lump=Math.max(0,Number($('lumpPrepay').value)||0);
+ const baseline=simulateSchedule(base.p,base.annual,base.n,base.emi);
+ const scenario=simulateSchedule(base.p,base.annual,base.n,base.emi,extra,lump);
+ const saved=Math.max(0,baseline.totalInterest-scenario.totalInterest),monthsSaved=Math.max(0,baseline.months-scenario.months);
+ $('savedInterest').textContent=money(saved);$('savedTime').textContent=monthsSaved+' months';$('newPayoff').textContent=scenario.months+' months';
+ const rows=[
+  ['Monthly EMI',money(base.emi),money(base.emi)],
+  ['Total interest',money(baseline.totalInterest),money(scenario.totalInterest)],
+  ['Total repayment',money(baseline.totalPaid),money(scenario.totalPaid)],
+  ['Processing fee',money(base.fee),money(base.fee)],
+  ['Total cost incl. fee',money(baseline.totalPaid+base.fee),money(scenario.totalPaid+base.fee)],
+  ['Payoff duration',baseline.months+' months',scenario.months+' months']
+ ];
+ $('comparisonRows').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+ $('scheduleRows').innerHTML=scenario.rows.map(r=>`<tr><td>${r.month}</td><td>${money(r.opening)}</td><td>${money(r.scheduledPayment+r.extraPaid)}</td><td>${money(r.interest)}</td><td>${money(r.principalPaid)}</td><td>${money(r.lumpPaid)}</td><td>${money(r.closing)}</td></tr>`).join('');
+ $('scheduleNote').textContent=`Showing ${scenario.rows.length} instalments for the prepayment scenario. This table includes the additional payments; the original EMI summary above remains unchanged.`;
+ $('prepaySummary').dataset.calculated='true';
+}
+
+function calculateAffordability(){
+ const income=Math.max(0,Number($('monthlyIncome').value)||0);
+ const existing=Math.max(0,Number($('existingEmi').value)||0);
+ const limit=Math.max(1,Math.min(100,Number($('foirLimit').value)||40));
+ if(income<=0){toast('Enter a valid net monthly income');return}
+ if(!state.result){toast('Calculate the loan EMI first');return}
+ const proposed=state.result.emi,foir=(existing+proposed)/income*100;
+ const capacity=Math.max(0,income*limit/100-existing);
+ const r=state.result.annual/1200,n=state.result.n;
+ let eligible=0;
+ if(capacity>0){eligible=r===0?capacity*n:capacity*(Math.pow(1+r,n)-1)/(r*Math.pow(1+r,n))}
+ $('foirOutput').textContent=foir.toFixed(1)+'%';
+ $('emiCapacityOutput').textContent=money(capacity);
+ $('eligibleLoanOutput').textContent=money(eligible);
+ const verdict=$('creditVerdict');verdict.className='credit-verdict';
+ if(foir<=limit){verdict.classList.add('good');verdict.textContent=`Within the selected ${limit}% FOIR planning limit. The proposed EMI uses ${foir.toFixed(1)}% of net monthly income when existing obligations are included.`}
+ else if(foir<=60){verdict.classList.add('warn');verdict.textContent=`Above the selected ${limit}% FOIR limit. The proposed EMI may stretch monthly affordability; consider a smaller loan or longer tenure.`}
+ else{verdict.classList.add('bad');verdict.textContent=`High repayment burden: estimated FOIR is ${foir.toFixed(1)}%. The proposed EMI is above the selected affordability limit.`}
+}
+function calcEMI(){
+ const p=Math.max(0,Number($('principal').value)||0),annual=Math.max(0,Number($('interest').value)||0),n=state.months,fee=Math.max(0,Number($('processingFee').value)||0);
+ if(p<=0||n<1){toast('Enter a valid loan amount and tenure');return}
+ const r=annual/1200;
+ const emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+ const baseline=simulateSchedule(p,annual,n,emi);
+ const total=baseline.totalPaid,interest=baseline.totalInterest;
+ state.result={p,annual,n,fee,emi,total,interest};
+
+ $('emiOutput').textContent=money(emi);$('principalOutput').textContent=money(p);$('interestOutput').textContent=money(interest);$('payableOutput').textContent=money(total);$('tenureOutput').textContent=state.unit==='years'?`${n/12} years (${n} months)`:`${n} months (${(n/12).toFixed(2)} years)`;$('costOutput').textContent=money(total+fee);
+ $('resultEmpty').classList.add('hidden');$('resultData').classList.remove('hidden');$('calcStatus').textContent='Calculated';$('calcStatus').classList.add('done');
+
+}
+function metalFormat(value){return money(value)}
+function applySelectedMetalRate(){
+ if(!state.metalRates)return;
+ const type=$('metalType').value;
+ const rate=type==='gold24'?state.metalRates.gold24:type==='gold22'?state.metalRates.gold22:state.metalRates.silverGram;
+ if(rate>0){$('metalRate').value=rate.toFixed(2);estimateMetal()}
+}
+function metalObservation(payload,instrument){
+ const obs=(payload.observations||[]).find(x=>x.instrument===instrument);
+ return obs&&Number.isFinite(Number(obs.value))?obs:null;
+}
+async function refreshMetalRates(){
+ const button=$('refreshMetalRates'),status=$('metalRateStatus');
+ button.disabled=true;button.textContent='Fetching…';status.className='metal-status';status.textContent='Requesting latest available daily benchmark data…';
+ try{
+  const urls=['https://snapdata.dev/api/v1/gold/in/latest.json','https://snapdata.dev/api/v1/silver/in/latest.json'];
+  const responses=await Promise.all(urls.map(url=>fetch(url,{cache:'no-store'})));
+  if(responses.some(r=>!r.ok))throw new Error('The market data service returned an unavailable response.');
+  const [gold,silver]=await Promise.all(responses.map(r=>r.json()));
+  const g24=metalObservation(gold,'XAU.24K'),g22=metalObservation(gold,'XAU.22K'),ag=metalObservation(silver,'XAG');
+  if(!g24||!g22||!ag)throw new Error('The response did not contain all required purity observations.');
+  const generated=[gold.generated_at,silver.generated_at].filter(Boolean).sort()[0];
+  const date=g24.date||gold.coverage?.to||null;
+  const asOf=generated?new Date(generated):date?new Date(date+'T12:00:00Z'):null;
+  if(!asOf||Number.isNaN(asOf.getTime()))throw new Error('The data timestamp is missing or invalid.');
+  const ageDays=Math.max(0,(Date.now()-asOf.getTime())/86400000);
+  state.metalRates={gold24:Number(g24.value),gold22:Number(g22.value),silverGram:Number(ag.value)/1000,date,asOf,ageDays,
+   goldChange:Number(g24.change_pct),silverChange:Number(ag.change_pct),status:g24.status||'unverified'};
+  $('gold24Rate').textContent=metalFormat(state.metalRates.gold24);
+  $('gold22Rate').textContent=metalFormat(state.metalRates.gold22);
+  $('silverGramRate').textContent=metalFormat(state.metalRates.silverGram);
+  $('gold24Change').textContent=Number.isFinite(state.metalRates.goldChange)?`${state.metalRates.goldChange>0?'+':''}${state.metalRates.goldChange.toFixed(2)}% vs previous close`:'Daily change unavailable';
+  $('gold22Change').textContent='IBJA 916 benchmark';
+  $('silverChange').textContent=Number.isFinite(state.metalRates.silverChange)?`${state.metalRates.silverChange>0?'+':''}${state.metalRates.silverChange.toFixed(2)}% vs previous close`:'Daily change unavailable';
+  const stamp=asOf.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Kolkata'});
+  if(ageDays<=1.5){status.className='metal-status fresh';status.textContent=`Latest daily benchmark loaded · ${stamp} IST. This is not an intraday live quote.`}
+  else{status.className='metal-status stale';status.textContent=`STALE DATA · Latest available benchmark: ${stamp} IST (${Math.floor(ageDays)} days old). Do not treat this as today's market price; verify with a jeweller or lender.`}
+  applySelectedMetalRate();
+  estimateMetal();
+ }catch(error){
+  status.className='metal-status error';
+  status.textContent=`Rate refresh failed: ${error.message} Use a verified manual quote instead. No previous value is being represented as live.`;
+  toast('Unable to refresh metal rates');
+ }finally{button.disabled=false;button.textContent='Refresh rates'}
+}
+function estimateMetal(){
+ const rate=Math.max(0,Number($('metalRate').value)||0),weight=Math.max(0,Number($('metalWeight').value)||0),ltv=Math.max(0,Math.min(100,Number($('metalLtv').value)||0));
+ const value=rate*weight*ltv/100;$('metalEstimate').textContent=value>0?`Indicative eligible amount: ${money(value)} (before lender-specific purity and deduction checks).`:'Enter a verified rate and weight.';
+}
+function applyMetal(){const rate=Number($('metalRate').value)||0,weight=Number($('metalWeight').value)||0,ltv=Number($('metalLtv').value)||0;if(rate<=0||weight<=0){toast('Enter a valid metal quote and net weight');return}$('principal').value=Math.round(rate*weight*ltv/100);syncPair('principal','principalRange','number');estimateMetal()}
+function calculateGoal(){
+ const target=Number($('goalTarget').value),years=Number($('goalYears').value),annual=Number($('goalReturn').value),inflation=Number($('goalInflation').value),step=Number($('goalStep').value);
+ if(!(target>0&&years>0&&years<=60&&annual>=0&&annual<=60&&inflation>=0&&inflation<=30&&step>=0&&step<=100)){toast('Check goal inputs and allowed ranges');return}
+ const months=Math.round(years*12),r=annual/1200,inf=inflation/100,stepRate=step/100,future=target*Math.pow(1+inf,years);
+ const fv=base=>{let balance=0,invested=0;for(let m=1;m<=months;m++){const contribution=base*Math.pow(1+stepRate,Math.floor((m-1)/12));balance=balance*(1+r)+contribution;invested+=contribution}return {balance,invested}};
+ let low=0,high=Math.max(1,future/months);
+ while(fv(high).balance<future&&high<1e12)high*=2;
+ for(let i=0;i<100;i++){const mid=(low+high)/2;if(fv(mid).balance>=future)high=mid;else low=mid}
+ $('goalFuture').textContent=money(future);$('goalSip').textContent=money(high);
+}
+function calculateSIP(){
+ const monthly=Number($('sipMonthly').value),years=Number($('sipYears').value),annual=Number($('sipReturn').value),step=Number($('sipStep').value);
+ if(!(monthly>0&&years>0&&years<=60&&annual>=0&&annual<=60&&step>=0&&step<=100)){toast('Check SIP inputs and allowed ranges');return}
+ const months=Math.round(years*12),r=annual/1200,g=step/100;let balance=0,invested=0;
+ for(let m=1;m<=months;m++){const contribution=monthly*Math.pow(1+g,Math.floor((m-1)/12));balance=balance*(1+r)+contribution;invested+=contribution}
+ $('sipInvested').textContent=money(invested);$('sipFuture').textContent=money(balance);$('sipGain').textContent=money(balance-invested);
+}
+function calculateLumpsum(){
+ const amount=Number($('lumpAmount').value),years=Number($('lumpYears').value),annual=Number($('lumpReturn').value);
+ if(!(amount>0&&years>0&&years<=60&&annual>=0&&annual<=60)){toast('Check lumpsum inputs and allowed ranges');return}
+ const future=amount*Math.pow(1+annual/1200,Math.round(years*12));
+ $('lumpInvested').textContent=money(amount);$('lumpFuture').textContent=money(future);$('lumpGain').textContent=money(future-amount);
+}
+function calculateSWP(){
+ const corpus=Number($('swpCorpus').value),withdrawal=Number($('swpMonthly').value),annual=Number($('swpReturn').value),years=Number($('swpYears').value),step=Number($('swpInflation').value);
+ if(!(corpus>0&&withdrawal>0&&years>0&&years<=100&&annual>=0&&annual<=60&&step>=0&&step<=100)){toast('Check SWP inputs and allowed ranges');return}
+ const months=Math.round(years*12),r=annual/1200,g=step/100;let balance=corpus,total=0,elapsed=0;
+ for(let m=1;m<=months&&balance>0.005;m++){
+  balance*=1+r;
+  const due=withdrawal*Math.pow(1+g,Math.floor((m-1)/12));
+  const paid=Math.min(balance,due);balance-=paid;total+=paid;elapsed=m;
+ }
+ $('swpWithdrawn').textContent=money(total);$('swpEnding').textContent=money(balance);
+ $('swpDuration').textContent=balance>0.005?`${(elapsed/12).toFixed(1)} years (projection cap)`:`${Math.floor(elapsed/12)} years ${elapsed%12} months`;
+ $('swpNote').textContent=balance>0.005?'Corpus remains after the selected projection period. This does not guarantee the withdrawal rate is sustainable.':'Corpus is depleted within the selected period. Last withdrawal is capped at the remaining balance.';
+}
+
+function calculateDeposit(){
+ const type=$('depositType').value,principal=Number($('depositAmount').value),annual=Number($('depositRate').value),years=Number($('depositYears').value),frequency=Number($('depositFrequency').value),taxRate=Number($('depositTaxRate').value);
+ if(!(principal>0&&annual>=0&&annual<=30&&years>0&&years<=50&&taxRate>=0&&taxRate<=50)){toast('Check deposit inputs and allowed ranges');return}
+ const rate=annual/100,months=Math.round(years*12);let invested=0,maturity=0;
+ if(type==='fd'){
+  const periods=frequency,wholePeriods=years*periods;
+  maturity=principal*Math.pow(1+rate/periods,wholePeriods);invested=principal;
+  $('depositAssumption').textContent=`FD: nominal annual rate compounded ${periods===12?'monthly':periods===4?'quarterly':periods===2?'half-yearly':'yearly'} for ${wholePeriods} periods. Premature withdrawal penalties and payout variants are not modelled.`;
+ }else{
+  // RD: month-end deposits; monthly effective rate equivalent to quarterly compounding.
+  const monthlyRate=Math.pow(1+rate/4,1/3)-1;
+  for(let m=1;m<=months;m++){maturity=maturity*(1+monthlyRate)+principal;invested+=principal}
+  $('depositAssumption').textContent=`RD: ₹${principal.toLocaleString('en-IN')} deposited at each month-end; monthly effective rate is derived from quarterly compounding. Actual bank RD day-count and rounding rules may differ.`;
+ }
+ const interest=Math.max(0,maturity-invested),estimatedTax=interest*taxRate/100,net=maturity-estimatedTax;
+ $('depositMaturity').textContent=money(maturity);$('depositInterest').textContent=money(interest);
+ $('depositTax').textContent=money(estimatedTax);$('depositNet').textContent=money(net);
+}
+
+function calculateGST(){
+ const amount=Number($('gstAmount').value),rate=Number($('gstRate').value)/100,inc=$('gstMode').value==='inclusive',supply=$('gstSupply').value;
+ if(!(amount>=0&&rate>=0)){toast('Enter a valid amount and GST rate');return}
+ const base=inc?amount/(1+rate):amount,tax=inc?amount-base:amount*rate,total=base+tax;
+ const cgst=supply==='intra'?tax/2:0,sgst=supply==='intra'?tax/2:0,igst=supply==='inter'?tax:0;
+ $('gstBase').textContent=money(base);$('gstTax').textContent=money(tax);$('gstCgst').textContent=money(cgst);
+ $('gstSgst').textContent=money(sgst);$('gstIgst').textContent=money(igst);$('gstTotal').textContent=money(total);
+}
+
+function switchView(view){
+ document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));
+ document.querySelectorAll('[data-view]').forEach(el=>el.classList.toggle('active',el.dataset.view===view));
+ closeMenu();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function openMenu(){ $('drawer').classList.add('open');$('menuBackdrop').classList.add('open');$('drawer').setAttribute('aria-hidden','false');$('menuBtn').setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}
+function closeMenu(){ $('drawer').classList.remove('open');$('menuBackdrop').classList.remove('open');$('drawer').setAttribute('aria-hidden','true');$('menuBtn').setAttribute('aria-expanded','false');document.body.style.overflow=''}
+function openShare(){ $('shareDialog').classList.add('open');$('shareBackdrop').classList.add('open');$('shareFeedback').textContent=''}
+function closeShare(){ $('shareDialog').classList.remove('open');$('shareBackdrop').classList.remove('open')}
+async function shareLink(){
+ const data={title:'FinPulse — Personal Finance OS',text:'Explore FinPulse finance calculators.',url:location.href};
+ if(navigator.share){try{await navigator.share(data);return}catch(e){if(e.name==='AbortError')return}}
+ await copyLink();
+}
+async function copyLink(){
+ try{await navigator.clipboard.writeText(location.href);$('shareFeedback').textContent='Page link copied.';toast('Link copied')}
+ catch(e){const temp=document.createElement('textarea');temp.value=location.href;document.body.appendChild(temp);temp.select();const ok=document.execCommand('copy');temp.remove();$('shareFeedback').textContent=ok?'Page link copied.':'Copy is unavailable in this browser.';if(ok)toast('Link copied')}
+}
+function bindPair(numberId,rangeId){
+ const num=$(numberId),range=$(rangeId);
+ num.addEventListener('input',()=>syncPair(numberId,rangeId,'number'));
+ range.addEventListener('input',()=>syncPair(numberId,rangeId,'range'));
+ range.addEventListener('change',()=>syncPair(numberId,rangeId,'range'));
+}
+bindPair('principal','principalRange');bindPair('interest','interestRange');
+$('tenureValue').addEventListener('input',e=>setMonthsFromVisible(e.target.value));
+$('tenureRange').addEventListener('input',e=>setMonthsFromVisible(e.target.value));
+$('tenureRange').addEventListener('change',e=>setMonthsFromVisible(e.target.value));
+$('unitYears').addEventListener('click',()=>setUnit('years'));
+$('unitMonths').addEventListener('click',()=>setUnit('months'));
+$('principal').addEventListener('change',()=>{const p=Math.max(1,Number($('principal').value)||1);$('principal').value=p;$('principalRange').value=Math.max(Number($('principalRange').min),Math.min(Number($('principalRange').max),p));formatPrincipal()});
+$('interest').addEventListener('input',()=>{const r=Math.max(0,Math.min(40,Number($('interest').value)||0));$('interestRange').value=r;invalidate()});
+$('interestRange').addEventListener('input',()=>{$('interest').value=$('interestRange').value;invalidate()});
+$('processingFee').addEventListener('input',invalidate);
+['extraMonthly','lumpPrepay'].forEach(id=>$(id).addEventListener('input',()=>{
+ $('calcStatus').textContent='Prepayment changed';$('calcStatus').classList.remove('done');
+ $('scheduleNote').textContent='Prepayment inputs changed. Press Calculate EMI to refresh the prepayment comparison.';
+}));
+$('principal').addEventListener('input',()=>{const p=Math.max(0,Number($('principal').value)||0);$('principalRange').value=Math.max(Number($('principalRange').min),Math.min(Number($('principalRange').max),p));formatPrincipal();invalidate()});
+$('calculateBtn').addEventListener('click',calcEMI);
+$('calculateAffordability').addEventListener('click',calculateAffordability);
+$('calculatePrepayment').addEventListener('click',calculatePrepayment);
+$('loanChoices').addEventListener('click',e=>{const b=e.target.closest('[data-loan]');if(b)setLoan(b.dataset.loan)});
+$('bankRates').addEventListener('click',e=>{const b=e.target.closest('[data-bank]');if(b)chooseBank(b.dataset.bank,b)});
+$('useMetalValue').addEventListener('click',applyMetal);
+$('refreshMetalRates').addEventListener('click',refreshMetalRates);
+$('metalType').addEventListener('change',applySelectedMetalRate);
+['metalRate','metalWeight','metalLtv'].forEach(id=>$(id).addEventListener('input',estimateMetal));
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+document.querySelectorAll('[data-dest]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.dest)));
+
+function selectWealthCategory(key){
+ const names={goal:'GOAL SIP',sip:'MONTHLY SIP',lump:'LUMPSUM',swp:'SWP / WITHDRAWAL'};
+ if(!names[key])return;
+ document.querySelectorAll('[data-wealth-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.wealthPanel===key));
+ document.querySelectorAll('.wealth-choice').forEach(button=>{
+  const selected=button.dataset.wealth===key;
+  button.classList.toggle('selected',selected);
+  button.setAttribute('aria-pressed',selected?'true':'false');
+ });
+ $('wealthCurrentBadge').textContent=names[key];
+}
+document.querySelectorAll('.wealth-choice').forEach(button=>button.addEventListener('click',()=>selectWealthCategory(button.dataset.wealth)));
+selectWealthCategory('goal');
+
+$('goalCalculate').addEventListener('click',calculateGoal);
+$('sipCalculate').addEventListener('click',calculateSIP);
+$('lumpCalculate').addEventListener('click',calculateLumpsum);
+$('swpCalculate').addEventListener('click',calculateSWP);
+function syncDepositControls(){const rd=$('depositType').value==='rd';$('depositFrequency').disabled=rd;$('depositFrequency').style.opacity=rd?'.5':'1';$('depositAmount').previousElementSibling.textContent=rd?'Monthly instalment (₹)':'Principal amount (₹)';}
+$('depositType').addEventListener('change',syncDepositControls);syncDepositControls();
+$('depositCalculate').addEventListener('click',calculateDeposit);
+$('gstCalculate').addEventListener('click',calculateGST);
+$('menuBtn').addEventListener('click',openMenu);$('closeMenu').addEventListener('click',closeMenu);$('menuBackdrop').addEventListener('click',closeMenu);
+$('shareBtn').addEventListener('click',openShare);$('closeShare').addEventListener('click',closeShare);$('shareBackdrop').addEventListener('click',closeShare);
+$('nativeShare').addEventListener('click',shareLink);$('copyLink').addEventListener('click',copyLink);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeShare()}});
+setLoan('home');calculateGoal();calculateDeposit();calculateGST();
+})();
+</script>
+</body>
+</html>
