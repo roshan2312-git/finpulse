@@ -323,6 +323,7 @@
 <div class="field"><label for="depositFrequency">FD compounding frequency</label><select class="control" id="depositFrequency"><option value="4" selected>Quarterly</option><option value="12">Monthly</option><option value="2">Half-yearly</option><option value="1">Yearly</option></select></div>
 <div class="field"><label for="depositTaxRate">Estimated tax rate on interest (%)</label><input class="control" id="depositTaxRate" type="number" value="0" min="0" max="50" step=".5"></div>
 </div><button type="button" class="primary" id="depositCalculate">Calculate maturity</button>
+ <span class="tiny muted">TOTAL INVESTED / PRINCIPAL</span><strong id="depositInvested">—</strong>
 <div class="simple-result deposit-results"><span class="tiny muted">GROSS MATURITY VALUE</span><strong id="depositMaturity">—</strong><span class="tiny muted">GROSS INTEREST</span><strong id="depositInterest">—</strong><span class="tiny muted">ESTIMATED TAX ON INTEREST</span><strong id="depositTax">—</strong><span class="tiny muted">ESTIMATED VALUE AFTER TAX</span><strong id="depositNet">—</strong></div>
 <p class="tiny muted" id="depositAssumption">FD uses the selected compounding frequency. RD uses monthly instalments with quarterly-equivalent compounding and month-end deposits. Estimated tax is a simplified assumption, not a tax/TDS determination; actual tax depends on total income and applicable rules.</p></section></div>
 </section>
