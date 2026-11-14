@@ -592,6 +592,7 @@ function calculateDeposit(){
   for(let m=1;m<=months;m++){maturity=maturity*(1+monthlyRate)+principal;invested+=principal}
   $('depositAssumption').textContent=`RD: ₹${principal.toLocaleString('en-IN')} deposited at each month-end; monthly effective rate is derived from quarterly compounding. Actual bank RD day-count and rounding rules may differ.`;
  }
+ $('depositInvested').textContent=money(invested);
  const interest=Math.max(0,maturity-invested),estimatedTax=interest*taxRate/100,net=maturity-estimatedTax;
  $('depositMaturity').textContent=money(maturity);$('depositInterest').textContent=money(interest);
  $('depositTax').textContent=money(estimatedTax);$('depositNet').textContent=money(net);
